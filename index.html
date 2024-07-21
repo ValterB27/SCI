@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificação de Equipamentos e Ampolas</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .img{
+            display: flex;
+            justify-content: center;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        body h1{
+            text-align: center;
+            margin: 30px;
+        }
+
+        body div{
+            text-align: center;
+            
+        }
+        input, button {
+            display: block;
+            margin: 10px 0;
+            border-radius: 20px;
+            padding: 8px;
+            font-weight: 700;
+            border-color: red;
+            margin: 20px;
+        }
+        .mover button{
+            background-color: red;
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+        }
+        .mover{
+            display: flex;
+            justify-content: center;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<header>
+    <div class="img">
+    <img src="imagens/Logo-Dafo-dobro-tamanho.png" alt="">
+    </div>
+</header>
+<body>
+    <h1>Pesagem de Ampolas do Sistema SCI</h1>
+    
+    <div>
+        <label for="equipamento">Nome do Equipamento:</label>
+        <div class="mover"><input type="text" id="equipamento" placeholder="Digite o nome do equipamento"></div>
+    </div>
+    
+    <div>
+        <label for="ampola">Número da Ampola:</label>
+        <div class="mover"><input type="text" id="ampola" placeholder="Digite o número da ampola"></div>
+    </div>
+    
+    <div>
+        <label for="peso">Peso da Ampola:</label>
+        <div class="mover"><input type="number" id="peso" placeholder="Digite o peso da ampola"></div>
+        <div class="mover"><button onclick="verificar()">Verificar</button></div>
+    </div>
+    
+    <div class="result" id="resultado"></div>
+    
+    <script>
+        // Dados de exemplo
+        const equipamentos = {
+            "Equipamento1": {
+                "Ampola1": 310,
+                "Ampola2": 12,
+                "Ampola3": 14
+            },
+            "Equipamento2": {
+                "Ampola1": 310,
+                "Ampola2": 12,
+                "Ampola3": 14
+            },
+            "Equipamento3": {
+                "Ampola1": 310,
+                "Ampola2": 12,
+                "Ampola3": 14
+            },
+        };
+        
+        function verificar() {
+            const equipamento = document.getElementById('equipamento').value;
+            const ampola = document.getElementById('ampola').value;
+            const peso = parseFloat(document.getElementById('peso').value);
+            const resultado = document.getElementById('resultado');
+            
+            if (equipamentos[equipamento] && equipamentos[equipamento][ampola] !== undefined) {
+                const pesoPermitido = equipamentos[equipamento][ampola];
+                if (peso >= 310 && peso <= 320) {
+                    if (peso === pesoPermitido) {
+                        resultado.textContent = "Ampola identificada e peso correto.";
+                        resultado.className = "result success";
+                    } else {
+                        resultado.textContent = `Ampola identificada, mas o peso esperado é ${pesoPermitido} gramas.`;
+                        resultado.className = "result error";
+                    }
+                } else {
+                    resultado.textContent = "Peso fora do intervalo permitido (8-14 gramas).";
+                    resultado.className = "result error";
+                }
+            } else {
+                resultado.textContent = "Equipamento ou ampola não cadastrados.";
+                resultado.className = "result error";
+            }
+        }
+
+    </script>
+</body>
+</html>
